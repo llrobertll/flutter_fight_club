@@ -253,15 +253,8 @@ class FightersInfo extends StatelessWidget {
                     style: const TextStyle(color: FightClubColors.darkGreyText),
                   ),
                   const SizedBox(height: 12),
-                  SizedBox(
-                      height: 92,
-                      width: 92,
-
-                      /// Добавил аватарку
-                      child: Image.asset(FightClubImages.youAvatar)),
-
-                  /// overall...(общее количество здоровья)
-                  /// current...(текущее количество здоровья)
+                  /// Добавил аватарку
+                  Image.asset(FightClubImages.youAvatar, height: 92, width: 92),
                 ],
               ),
               const ColoredBox(
@@ -276,12 +269,7 @@ class FightersInfo extends StatelessWidget {
                     style: const TextStyle(color: FightClubColors.darkGreyText),
                   ),
                   const SizedBox(height: 12),
-                  SizedBox(
-                      height: 92,
-                      width: 92,
-
-                      /// Добавил аватарку
-                      child: Image.asset(FightClubImages.enemyAvatar)),
+                  Image.asset(FightClubImages.enemyAvatar, height: 92, width: 92),
                 ],
               ),
               LivesWidget(
