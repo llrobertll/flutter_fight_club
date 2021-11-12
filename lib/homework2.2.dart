@@ -7,11 +7,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'fight_club_images.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MyApppp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApppp extends StatelessWidget {
+  const MyApppp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

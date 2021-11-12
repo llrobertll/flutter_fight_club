@@ -44,3 +44,8 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Заметки во время учебы
+lib/lesson.dart
+lib/lesson2.2.dart
+lib/homework2.2.dart

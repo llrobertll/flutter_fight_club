@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyAppp());
 }
 
-class MyApp extends StatelessWidget {
+class MyAppp extends StatelessWidget {
+  const MyAppp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MyHomePage(),
+    return MaterialApp(
+      theme: ThemeData(
+        textTheme: GoogleFonts.pressStart2pTextTheme(
+          Theme.of(context).textTheme,
+        ),
+      ),
+      home: const MyHomePage(),
     );
   }
 }
@@ -193,9 +201,9 @@ class BodyPartButton extends StatelessWidget {
         child: ColoredBox(
           color:
 
-          /// Тернарная конструкция
-          /// Если selected тогда такой цвет else черный26
-          selected ? const Color.fromRGBO(28, 121, 206, 1) : Colors.black26,
+              /// Тернарная конструкция
+              /// Если selected тогда такой цвет else черный26
+              selected ? const Color.fromRGBO(28, 121, 206, 1) : Colors.black26,
           child: Center(
             child: Text(bodyPart.name.toUpperCase()),
           ),
