@@ -40,7 +40,7 @@ class MyHomePageState extends State<MyHomePage> {
   /// Создаем логику что противник будет атаковать и защищать
   /// И добавляем помещаем слоучайный выбор в переменную
   BodyPart whatEnemyAttacks = BodyPart.random();
-  BodyPart whatEnemyDefense = BodyPart.random();
+  BodyPart whatEnemyDefends = BodyPart.random();
 
   /// Для логики добавляем три параметра
   /// И в статику выводим максимально количество жизней
@@ -81,6 +81,7 @@ class MyHomePageState extends State<MyHomePage> {
                     child: Center(
                       child: Text(
                         resultText,
+                        textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 10,
@@ -140,7 +141,7 @@ class MyHomePageState extends State<MyHomePage> {
         /// Добавили две переменные и кладем туда условия:
         /// Противник теряет здоровье если атака не равна защите
         /// Я теряю здоровье если защита не равна атаке противника
-        final bool enemyLoseLife = attackingBodyPart != whatEnemyDefense;
+        final bool enemyLoseLife = attackingBodyPart != whatEnemyDefends;
         final bool yourLoseLife = defendingBodyPart != whatEnemyAttacks;
 
         /// Создаем условия для потери здоровья
@@ -175,7 +176,7 @@ class MyHomePageState extends State<MyHomePage> {
         }
 
         /// Далее нам нужно сгенерировать новые значение (Обнулить старое)
-        whatEnemyDefense = BodyPart.random();
+        whatEnemyDefends = BodyPart.random();
         whatEnemyAttacks = BodyPart.random();
 
         defendingBodyPart = null;
@@ -248,11 +249,12 @@ class FightersInfo extends StatelessWidget {
               Column(
                 children: [
                   const SizedBox(height: 16),
-                  Text(
-                    "You".toUpperCase(),
-                    style: const TextStyle(color: FightClubColors.darkGreyText),
+                  const Text(
+                    "You",
+                    style: TextStyle(color: FightClubColors.darkGreyText),
                   ),
                   const SizedBox(height: 12),
+
                   /// Добавил аватарку
                   Image.asset(FightClubImages.youAvatar, height: 92, width: 92),
                 ],
@@ -264,12 +266,13 @@ class FightersInfo extends StatelessWidget {
               Column(
                 children: [
                   const SizedBox(height: 16),
-                  Text(
-                    "Enemy".toUpperCase(),
-                    style: const TextStyle(color: FightClubColors.darkGreyText),
+                  const Text(
+                    "Enemy",
+                    style: TextStyle(color: FightClubColors.darkGreyText),
                   ),
                   const SizedBox(height: 12),
-                  Image.asset(FightClubImages.enemyAvatar, height: 92, width: 92),
+                  Image.asset(FightClubImages.enemyAvatar,
+                      height: 92, width: 92),
                 ],
               ),
               LivesWidget(
@@ -416,7 +419,7 @@ class LivesWidget extends StatelessWidget {
     Key? key,
     required this.overallLivesCount,
     required this.currentLivesCount,
-  })
+  })  
 
   /// Делаем проверку коректной передачи параметров (assert)
   /// Общее количество жизней должно быть не меньше или равно 1
@@ -427,32 +430,36 @@ class LivesWidget extends StatelessWidget {
         assert(currentLivesCount <= overallLivesCount),
         super(key: key);
 
+  /// Третий вариант решения задачи:
+  /// Будем возвращать список виджетов [List]
+  /// Тоесть добавляем видет список в список
+  /// Сначало идут сердечка а потом наше условие if
+  /// И теперь у нас возвращается список виджетов
+  /// И обязательно добавить лист метод expand
   @override
   Widget build(BuildContext context) {
-    /// Чтобы добавить нужное растояние между сердечками нужно:
-    /// Задать Правильные размеры бокса в котором лежит колонка
-    /// Нужен отступ 4:
-    /// Высота картинки 18 (18*5 = 90) + отступы 4 (90+4*4 = 106)
-    /// Далее отсаеться задать правильное расположение картинок
-    /// (без отступов от первого элемента и последнего)
-    return SizedBox(
-      height: 106,
-      child: Column(
-        /// Сердечка по середине
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-        /// Используем функцию генератор чтобы сделать пять 1 друг под другом
-        /// И добавляем логику
+    return Column(
+        mainAxisSize: MainAxisSize.min,
         children: List.generate(overallLivesCount, (index) {
           if (index < currentLivesCount) {
-            return Image.asset(FightClubIcons.heartFull, width: 18, height: 18);
+            return [
+              Image.asset(FightClubIcons.heartFull, width: 18, height: 18),
+              if (index < overallLivesCount - 1) const SizedBox(height: 4),
+            ];
           } else {
-            return Image.asset(FightClubIcons.heartEmpty,
-                width: 18, height: 18);
+            return [
+              Image.asset(FightClubIcons.heartEmpty, width: 18, height: 18),
+              if (index < overallLivesCount - 1) const SizedBox(height: 4),
+            ];
           }
-        }),
-      ),
-    );
+
+          /// метод на вход получает елемент, а потом говорит
+          /// как его расскрывать внутри списка
+          /// И нам нужно просто передать обратно список который мы получили
+          /// И на выходе получиться один список в котором все элементы идут друг за другом
+          /// .toList нужен потому что после expand нам возвращаеться int а
+          /// колонка принимает обратно List
+        }).expand((element) => element).toList());
   }
 }
 
