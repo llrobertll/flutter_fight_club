@@ -158,7 +158,7 @@ class MyHomePageState extends State<MyHomePage> {
 
         /// Делаем логику для получения результата поединка в виде текста
         if (yourLives == 0 && enemysLives != 0) {
-          resultText = "You lose";
+          resultText = "You lost";
         } else if (yourLives != 0 && enemysLives == 0) {
           resultText = "You won";
         } else if (yourLives == 0 && enemysLives == 0) {
